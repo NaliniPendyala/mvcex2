@@ -27,4 +27,11 @@ public class UserDetService {
 	 
  
  }
+ 
+ public UserDetails validate(String uname) {
+	
+	 UserDetails ud=m.find(UserDetails.class, uname);
+	m.close();	 
+	  return ud;
+ }
 }

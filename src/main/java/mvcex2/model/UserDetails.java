@@ -3,8 +3,14 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts.action.ActionErrors;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
 @Entity
-public class UserDetails {
+public class UserDetails extends ActionForm {
 
 	
 	public String getName() {
@@ -36,5 +42,25 @@ public class UserDetails {
 	
 	@Id
 	String username;
+	@Override
 	
+	public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
+
+		
+		ActionErrors ea= new ActionErrors();
+		
+		if(name.trim().equals(""))
+		
+		{
+		 ea.add("name", new ActionMessage("Name"));
+		 }
+		
+		if(username.trim().equals(""))
+				{
+			ea.add("username", new ActionMessage("UserName"));
+				}
+		return ea;
+		
+		
+	}
 }
