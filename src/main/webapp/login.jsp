@@ -12,25 +12,50 @@
 <body>
 
 <script>
-function formaction(button)
-
+function validate(username)
 {
-	alert((document.forms[0].action)+"?method="+button.value);
-	document.forms[0].action= document.forms[0].action+"?method="+button.value;
-	document.forms[0].submit();
 	
-	}
+	
+    var http=new XMLHttpRequest();
+   
+    http.onreadystatechange=function()
+    {
+    	
+    	if(this.readyState == 4 && this.status == 200)
+    	{
+    	   var user=JSON.parse(this.responseText);
+    	   alert(user.name);
+    	   document.getElementById("name").innerHTML=user.name;
+    	   document.getElementById("username").innerHTML=user.username;
+        	    
+    	}
+    }
+    
+   
+    
+    http.open("GET","validateemail.jsp?username="+username.value,true);
+    http.send();
+}
 </script>
 
 
 <c:form action="registration">
 
-<c:text property="username"></c:text>
+<c:text property="username" onblur="validate(this)"/>
+<span id="validationmessage"></span>
 <c:errors property="username"/>
 
-<c:button value="login" property="click" onclick="formaction(this)"/>
+<c:button value="login" property="click" onclick="formsubmit()"/>
 
 </c:form>
+
+<table>
+<tr>
+<td id='name'></td><td id="username"></td>
+</tr>
+
+</table>
+
 </body>
 
 </body>
